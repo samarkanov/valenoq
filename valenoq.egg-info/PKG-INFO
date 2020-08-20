@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: valenoq
+Version: 0.0.1
+Summary: Python package to interact with valenoq.com RESTful API
+Home-page: http://github.com/samarkanov/valenoq
+Author: valenoq.com
+Author-email: samarkanov@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.5
