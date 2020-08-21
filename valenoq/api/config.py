@@ -5,12 +5,16 @@ from pdb import set_trace as stop
 CONFIG_DIR = ".valenoq"
 CONFIG_FILE_NAME = "api.config"
 
+
 class ValenoqIllegalConfigParam(Exception):
     pass
 
-
 class ValenoqConfigCannotBeCreated(Exception):
     pass
+
+class ValenoqConfigFileDoesNotExist(Exception):
+    pass
+
 
 def set(*args, **kwargs):
     """
@@ -38,3 +42,23 @@ def set(*args, **kwargs):
             ifile.write(json.dumps({"api_key": api_key}))
     else:
         raise ValenoqIllegalConfigParam("The only supported configuration parameter is api_key. The value of the api_key cannot be empty")
+
+def get(config_item):
+    """
+    Getting configuration data from a local config file (~/.valenoq/api.config)
+
+    Parameters
+    ------------
+    config_item: string
+    The configuration item to be retrieved from config file
+    """
+    config_file_path = os.path.join(os.path.expanduser("~"), CONFIG_DIR, CONFIG_FILE_NAME)
+    if not os.path.isfile(config_file_path):
+        ValenoqConfigFileDoesNotExist(
+            "configuration file (config_file_path) does not exist. Please run config.set(`your_api_key`) first")
+
+    with open(config_file_path) as config_file:
+        config = json.load(config_file)
+
+    if config_item == "api_key":
+        return config.get("api_key")
