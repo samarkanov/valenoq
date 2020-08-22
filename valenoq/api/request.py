@@ -59,20 +59,24 @@ class ValenoqApiReqest(object):
         return url
 
     def ask_valenoq(self, ticker):
-        self.url += "&ticker={ticker}".format(ticker=ticker)
-        reply = requests.get(self.url)
+        url = "{url_prefix}&ticker={ticker}".format(url_prefix=self.url, ticker=ticker)
+        reply = requests.get(url)
         if reply.status_code != 200:
             raise ValenoqAPICall404("{url} cannot be reached. Please retry later".format(url=self.url))
         return json.loads(reply.text)
 
     def format(self, raw):
         res = dict()
+        name_map = {"c": "close", "o": "open", "v": "vol", "h": "high", "l": "low"}
         if self.date_interval.api_type == "intraday":
             # flatten the nested structure
             if raw:
                 for date_str, val in raw.items():
                     for time_str, ohclv in val.items():
-                        res["%s%s" %(date_str, time_str)] = ohclv
+                        ohclv_formatted = dict()
+                        for key, val in ohclv.items():
+                            ohclv_formatted[name_map.get(key)] = val
+                        res["%s%s" %(date_str, time_str)] = ohclv_formatted
         else:
             res = raw
         return res
@@ -172,7 +176,7 @@ def get(ticker, *args, **kwargs):
         for tick, data in result.items():
             df = pd.DataFrame(data).transpose()
             df.index = pd.to_datetime(df.index)
-            df.index.name = "date"
+            df.index.name = "dt"
             df["ticker"] = tick
             df_list.append(df)
         result = pd.concat(df_list)
@@ -202,7 +206,7 @@ def balance_sheet(ticker, *args, **kwargs):
     nr_quarters: int, optional
         The number of quarters (since the last one) for which the data is requested.
         Maximum limit is 12.
-        Default value: 1 (latest reported balance sheet)
+        Default value: 1 (latest reported balance sheet is returned)
     out_format: {"json", "array", "pandas"}, optional
         The format of the output.
         Default value: pandas DataFrame object
