@@ -7,6 +7,7 @@ from pdb import set_trace as stop
 class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
 
     def setUp(self):
+        config.set(api_key=os.getenv("VALENOQ_API_KEY"))
         self.ticker = "TSLA"
 
     def tearDown(self):
@@ -151,6 +152,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
 class ApiGetListTickersOHCLVTest(unittest.TestCase):
 
     def setUp(self):
+        config.set(api_key=os.getenv("VALENOQ_API_KEY"))
         self.tickers = ["AAPL", "MU"]
 
     def tearDown(self):
@@ -302,6 +304,7 @@ class ApiGetListTickersOHCLVTest(unittest.TestCase):
 class ApiGetBalanceSheetTest(unittest.TestCase):
 
     def setUp(self):
+        config.set(api_key=os.getenv("VALENOQ_API_KEY"))
         self.ticker = "TSLA"
         self.tickers_list = ["AAPL", "MU", "ASML", "INTC", "EBAY"]
 
@@ -331,5 +334,4 @@ class ApiGetBalanceSheetTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    config.set(api_key=os.getenv("VALENOQ_API_KEY"))
     unittest.main()
