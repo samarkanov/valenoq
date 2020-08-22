@@ -11,7 +11,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntradayDay_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntradayDay_gw ==")
 
@@ -32,7 +32,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_4 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="day")
         self.assertTrue(data_4.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntradayHour_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntradayHour_gw ==")
 
@@ -53,7 +53,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_4 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="hour")
         self.assertTrue(data_4.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntraday_Default_Minute_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntraday_Default_Minute_gw ==")
 
@@ -71,7 +71,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_3 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="minute")
         self.assertTrue(data_3.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntraday_1_Minute_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntraday_1_Minute_gw ==")
 
@@ -86,7 +86,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_2 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="minute", collapse=1)
         self.assertTrue(data_2.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntraday_5_Minute_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntraday_5_Minute_gw ==")
 
@@ -101,7 +101,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_2 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="minute", collapse=5)
         self.assertTrue(data_2.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntraday_10_Minute_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntraday_10_Minute_gw ==")
 
@@ -116,7 +116,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_2 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="minute", collapse=10)
         self.assertTrue(data_2.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntraday_15_Minute_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntraday_15_Minute_gw ==")
 
@@ -131,7 +131,7 @@ class ApiGetSingleTickerOHCLVTest(unittest.TestCase):
         data_2 = request.get(self.ticker, start="2018-05-01", end="2018-05-01", frequency="minute", collapse=15)
         self.assertTrue(data_2.equals(data))
 
-    ##@unittest.skip("")
+    #@unittest.skip("")
     def testIntraday_30_Minute_gw(self):
         print("== ApiGetSingleTickerOHCLVTest: testIntraday_30_Minute_gw ==")
 
@@ -297,6 +297,36 @@ class ApiGetListTickersOHCLVTest(unittest.TestCase):
         data_2 = request.get(self.tickers, start="2018-05-01", end="2018-05-01", frequency="minute", collapse=30)
         self.assertTrue(data_2.equals(data))
 
+
+class ApiGetBalanceSheetTest(unittest.TestCase):
+
+    def setUp(self):
+        self.ticker = "TSLA"
+        self.tickers_list = ["AAPL", "MU", "ASML", "INTC", "EBAY"]
+
+    def tearDown(self):
+        pass
+
+    #@unittest.skip("")
+    def test_1quarter_1ticker(self):
+        print("== ApiGetBalanceSheetTest: test_1quarter_1ticker ==")
+        data = request.balance_sheet(self.ticker)
+        self.assertEqual(len(data), 1)
+        self.assertEqual(float(data["current_cash"]), 8818000000)
+
+    #@unittest.skip("")
+    def test_12quarters_1ticker(self):
+        print("== ApiGetBalanceSheetTest: test_12quarters_1ticker ==")
+        data = request.balance_sheet(self.ticker, nr_quarters=12)
+        self.assertEqual(len(data), 12)
+        self.assertEqual(int(data["current_cash"].loc["2020-06-30"]), 8818000000)
+
+    #@unittest.skip("")
+    def test_1quarter_5tickers(self):
+        print("== ApiGetBalanceSheetTest: test_1quarter_5tickers ==")
+        data = request.balance_sheet(self.tickers_list)
+        self.assertEqual(len(data), 5)
+        self.assertEqual(int(data["accounts_payable"].mean()), 8581800000)
 
 
 if __name__ == "__main__":

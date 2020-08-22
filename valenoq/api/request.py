@@ -11,6 +11,10 @@ class ValenoqAPICall404(Exception):
     pass
 
 
+class ValenoqIllegalInputs(Exception):
+    pass
+
+
 class ValenoqDateInterval(object):
 
     def __init__(self, start_end, frequency, collapse):
@@ -62,24 +66,54 @@ class ValenoqApiReqest(object):
         url = "{url_prefix}&ticker={ticker}".format(url_prefix=self.url, ticker=ticker)
         reply = requests.get(url)
         if reply.status_code != 200:
-            raise ValenoqAPICall404("{url} cannot be reached. Please retry later".format(url=self.url))
-        return json.loads(reply.text)
+            raise ValenoqAPICall404("{url} cannot be reached. Please retry later".format(url=url))
+        self.raw = _extract_data(json.loads(reply.text))
+        return self
 
-    def format(self, raw):
+    def format(self):
         res = dict()
         name_map = {"c": "close", "o": "open", "v": "vol", "h": "high", "l": "low"}
         if self.date_interval.api_type == "intraday":
             # flatten the nested structure
-            if raw:
-                for date_str, val in raw.items():
+            if self.raw:
+                for date_str, val in self.raw.items():
                     for time_str, ohclv in val.items():
                         ohclv_formatted = dict()
                         for key, val in ohclv.items():
                             ohclv_formatted[name_map.get(key)] = val
                         res["%s%s" %(date_str, time_str)] = ohclv_formatted
         else:
-            res = raw
+            res = self.raw
         return res
+
+
+def _extract_data(reply):
+    if reply.get("success") == False:
+        reply = reply.get("result", {"error": "VALENOQx404",
+                                 "text": "Error while making API call. Please retry later"})
+        err_msg = reply.get("text")
+        err_code = reply.get("error")
+        raise ValenoqAPICall404("%s (error code: %s)" %(err_msg, err_code))
+    else:
+        reply = reply.get("result")
+
+    return reply
+
+def _format_out_data(reply, outformat):
+    result = reply
+    if outformat == "pandas":
+        df_list = list()
+        for tick, data in reply.items():
+            df = pd.DataFrame(data).transpose()
+            df.index = pd.to_datetime(df.index)
+            df.index.name = "dt"
+            df["ticker"] = tick
+            df_list.append(df)
+        result = pd.concat(df_list)
+    elif outformat == "json":
+        result = json.dumps(result)
+
+    return result
 
 def get(ticker, *args, **kwargs):
     """
@@ -105,9 +139,8 @@ def get(ticker, *args, **kwargs):
         The API key (available after registration at https://valenoq.com)
         If:
             - No API key provided
-            - And ~/.valenoq/api.config does not exist
-            - And ~/.valenoq/api.config does not contain the correct api_key
-            then the returned time series data will be truncated
+            - And there is no `api_key` in ~/.valenoq/api.config
+            then the returned time series will be truncated
     frequency: {"minute", "hour", "day"}, optional
         The data frequency.
         Default value: "hour"
@@ -136,6 +169,9 @@ def get(ticker, *args, **kwargs):
 
     if isinstance(ticker, str):
         ticker = [ticker]
+    else:
+        if len(ticker) > 5:
+            raise ValenoqIllegalInputs("The lenght of the `ticker` array cannot be larger than 5")
 
     start_end = list()
     start = kwargs.get("start")
@@ -158,32 +194,9 @@ def get(ticker, *args, **kwargs):
     api_req = ValenoqApiReqest(api_key, date_interval)
 
     for tick in set(ticker):
-        res = api_req.ask_valenoq(tick)
-        if res.get("success") == False:
-            res = res.get("result", {"error": "VALENOQx404",
-                                     "text": "Error while making API call. Please retry later"})
-            err_msg = res.get("text")
-            err_code = res.get("error")
-            raise ValenoqAPICall404("%s (error code: %s)" %(err_msg, err_code))
-        else:
-            res = res.get("result")
-            result[tick] = api_req.format(res)
+        result[tick] = api_req.ask_valenoq(tick).format()
 
-    outformat = kwargs.get("out_format", "pandas")
-
-    if outformat == "pandas":
-        df_list = list()
-        for tick, data in result.items():
-            df = pd.DataFrame(data).transpose()
-            df.index = pd.to_datetime(df.index)
-            df.index.name = "dt"
-            df["ticker"] = tick
-            df_list.append(df)
-        result = pd.concat(df_list)
-
-    elif outformat == "json":
-        result = json.dumps(result)
-
+    result = _format_out_data(result, kwargs.get("out_format", "pandas"))
     return result
 
 
@@ -200,9 +213,8 @@ def balance_sheet(ticker, *args, **kwargs):
         The API key (available after registration at https://valenoq.com)
         If:
             - No API key provided
-            - Or ~/.valenoq/api.config does not exist
-            - Or ~/.valenoq/api.config does not contain the correct api_key
-            then the returned balance sheet data will truncated
+            - And there is no `api_key` in ~/.valenoq/api.config
+            then the returned balance sheet will truncated
     nr_quarters: int, optional
         The number of quarters (since the last one) for which the data is requested.
         Maximum limit is 12.
@@ -211,4 +223,25 @@ def balance_sheet(ticker, *args, **kwargs):
         The format of the output.
         Default value: pandas DataFrame object
     """
-    pass
+    result = dict()
+
+    api_key = kwargs.get("api_key", config.get("api_key"))
+
+    nr_quarters = kwargs.get("nr_quarters", 1)
+
+    if isinstance(ticker, str):
+        ticker = [ticker]
+    else:
+        if len(ticker) > 5:
+            raise ValenoqIllegalInputs("The lenght of the `ticker` array cannot be larger than 5")
+
+    for tick in ticker:
+        url = ("{base_url}/balancesheet?ticker={ticker}&nr_quarters={nr_quarters}&key={api_key}"
+              ).format(base_url=BASE_URL, ticker=tick, nr_quarters=nr_quarters, api_key=api_key)
+        reply = requests.get(url)
+        if reply.status_code != 200:
+            raise ValenoqAPICall404("{url} cannot be reached. Please retry later".format(url=url))
+        result[tick] = _extract_data(json.loads(reply.text))
+
+    result = _format_out_data(result, kwargs.get("out_format", "pandas"))
+    return result
