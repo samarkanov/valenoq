@@ -1,3 +1,4 @@
+import os
 import unittest
 from valenoq.api import config, request
 from pdb import set_trace as stop
@@ -330,4 +331,5 @@ class ApiGetBalanceSheetTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    config.set(api_key=os.getenv("VALENOQ_API_KEY"))
     unittest.main()
