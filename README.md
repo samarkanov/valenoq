@@ -46,7 +46,7 @@ data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5)  #
 data = request.get("AAPL", start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15)
 ```
 
-**Getting historical data for list of tickers:**
+**Getting historical data for a list of tickers:**
 ```python
 # 1-minute bars for AAPL, MU and INTC:
 data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1) 
