@@ -54,7 +54,7 @@ def get(config_item):
     """
     config_file_path = os.path.join(os.path.expanduser("~"), CONFIG_DIR, CONFIG_FILE_NAME)
     if not os.path.isfile(config_file_path):
-        ValenoqConfigFileDoesNotExist(
+        raise ValenoqConfigFileDoesNotExist(
             "configuration file (config_file_path) does not exist. Please run config.set(`your_api_key`) first")
 
     with open(config_file_path) as config_file:
