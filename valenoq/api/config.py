@@ -23,8 +23,13 @@ def set(*args, **kwargs):
     Parameters
     ------------
     api_key: str
-        The API key (available after registration at https://valenoq.com)
+    The API key (available upon registration at https://valenoq.com)
 
+    Examples
+    --------
+    Setting api_key globally:
+
+    >>> config.set(api_key="yourApiKey")
     """
     api_key = kwargs.get("api_key")
     if api_key:
@@ -51,7 +56,14 @@ def get(config_item):
     ------------
     config_item: string
     The configuration item to be retrieved from config file
+
+    Examples
+    --------
+    Getting current api_key:
+
+    >>> config.get("api_key")
     """
+
     config_file_path = os.path.join(os.path.expanduser("~"), CONFIG_DIR, CONFIG_FILE_NAME)
     if not os.path.isfile(config_file_path):
         raise ValenoqConfigFileDoesNotExist(

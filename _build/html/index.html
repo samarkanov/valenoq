@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valenoq API reference &#8212; valenoq  documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar">
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+  <div class="bd-toc-item active">
+  
+
+  <ul class="nav bd-sidenav">
+      
+    </ul>
+
+</nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#module-valenoq.api.request" class="nav-link">valenoq.api.request</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#module-valenoq.api.config" class="nav-link">valenoq.api.config</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="valenoq-api-reference">
+<h1>Valenoq API reference<a class="headerlink" href="#valenoq-api-reference" title="Permalink to this headline">¶</a></h1>
+<table class="longtable table">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#valenoq.api.request.get" title="valenoq.api.request.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valenoq.api.request.get</span></code></a></p></td>
+<td><p>Get the time series data for the provided ticker(s).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#valenoq.api.request.balance_sheet" title="valenoq.api.request.balance_sheet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valenoq.api.request.balance_sheet</span></code></a></p></td>
+<td><p>Get the balance sheet data for the provided ticker(s).</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable table">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#valenoq.api.config.get" title="valenoq.api.config.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valenoq.api.config.get</span></code></a></p></td>
+<td><p>Getting configuration data from a local config file (~/.valenoq/api.config)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#valenoq.api.config.set" title="valenoq.api.config.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valenoq.api.config.set</span></code></a></p></td>
+<td><p>Storing configuration data into a local config file (~/.valenoq/api.config)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="module-valenoq.api.request">
+<span id="valenoq-api-request"></span><h2>valenoq.api.request<a class="headerlink" href="#module-valenoq.api.request" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="valenoq.api.request.balance_sheet">
+<code class="sig-prename descclassname">valenoq.api.request.</code><code class="sig-name descname">balance_sheet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ticker</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#valenoq.api.request.balance_sheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the balance sheet data for the provided ticker(s).</p>
+<p>Returns the balance sheet for specified tickers and quarter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ticker</strong><span class="classifier">str or list</span></dt><dd><p>The ticker name or list of ticker names for which the data is requested
+The maximum length of the list is 5</p>
+</dd>
+<dt><strong>api_key: str, optional</strong></dt><dd><p>The API key (available after registration at <a class="reference external" href="https://valenoq.com">https://valenoq.com</a>). If <cite>api_key</cite>
+is not provided and the configuration was skipped, then the returned balance sheet
+will be truncated</p>
+</dd>
+<dt><strong>nr_quarters: int, optional</strong></dt><dd><p>The number of quarters (since the last one) for which the data is requested.
+Maximum limit is 12.
+Default value: 1 (latest reported balance sheet is returned)</p>
+</dd>
+<dt><strong>out_format: {“json”, “array”, “pandas”}, optional</strong></dt><dd><p>The format of the output.
+Default value: pandas DataFrame object.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Pandas dataframe containing the data</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Last quarter balance sheet for a ticker:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">balance_sheet</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Last quarter balance sheet for a list of tickers:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">balance_sheet</span><span class="p">([</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;INTC&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Five last balance sheets for “AAPL”:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">balance_sheet</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="n">nr_quarters</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="valenoq.api.request.get">
+<code class="sig-prename descclassname">valenoq.api.request.</code><code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ticker</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#valenoq.api.request.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the time series data for the provided ticker(s).</p>
+<p>Returns the historical time series either for intraday or end-of-the day data.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>ticker</strong><span class="classifier">str or list</span></dt><dd><p>The ticker name or list of ticker names for which the data is requested
+The maximum length of the list is 5</p>
+</dd>
+<dt><strong>start: str or datetime, optional</strong></dt><dd><p>The start date of the data series</p>
+</dd>
+<dt><strong>end: str or datetime, optional</strong></dt><dd><p>The end date of the data series
+Must be provided is the <cite>start</cite> day is not empty</p>
+</dd>
+<dt><strong>date: str or datetime, optional</strong></dt><dd><p>The requested date.</p>
+</dd>
+<dt><strong>api_key: str, optional</strong></dt><dd><p>The API key (available after registration at <a class="reference external" href="https://valenoq.com">https://valenoq.com</a>). If <cite>api_key</cite>
+is not provided and the configuration was skipped, then the returned time
+series will be truncated</p>
+</dd>
+<dt><strong>frequency: {“minute”, “hour”, “day”}, optional</strong></dt><dd><p>The data frequency.
+Default value: “hour”</p>
+</dd>
+<dt><strong>collapse: {1, 5, 10, 15, 30}, optional</strong></dt><dd><p>The interval of intraday data. Applicable only when the <cite>frequence</cite> is “minute”.
+If the requested frequency is either “hour” or “day”, then the provided value of <cite>collapse</cite> is ignored
+and the default 1 is used.</p>
+<p>Default values:
+- 5 if the requested <cite>frequency</cite> is “minute”
+- 1 otherwise</p>
+</dd>
+<dt><strong>out_format: {“json”, “dict”, “pandas”}, optional</strong></dt><dd><p>The format of the output.
+Default value: pandas DataFrame object</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Pandas dataframe containing the dataseries</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>1-day bar:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="s2">&quot;2018-05-01&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">            close   high     low    open         vol ticker</span>
+<span class="go">dt</span>
+<span class="go">2018-05-01  169.1  169.2  165.27  166.41  53569300.0   AAPL</span>
+</pre></div>
+</div>
+<p>1-minute bars for “AAPL”:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="s2">&quot;2018-05-01&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;minute&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>1-minute bars for a list of tickers:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;TSLA&quot;</span><span class="p">],</span> <span class="n">date</span><span class="o">=</span><span class="s2">&quot;2018-05-01&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;minute&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>1-minute bars for a list of tickers and interval of dates:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AAPL&quot;</span><span class="p">,</span> <span class="s2">&quot;TSLA&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tickers</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-05-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2018-05-02&quot;</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="s2">&quot;minute&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-valenoq.api.config">
+<span id="valenoq-api-config"></span><h2>valenoq.api.config<a class="headerlink" href="#module-valenoq.api.config" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="valenoq.api.config.get">
+<code class="sig-prename descclassname">valenoq.api.config.</code><code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config_item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#valenoq.api.config.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getting configuration data from a local config file (~/.valenoq/api.config)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config_item: string</strong></dt><dd></dd>
+<dt><strong>The configuration item to be retrieved from config file</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Getting current api_key:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;api_key&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="valenoq.api.config.set">
+<code class="sig-prename descclassname">valenoq.api.config.</code><code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#valenoq.api.config.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Storing configuration data into a local config file (~/.valenoq/api.config)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>api_key: str</strong></dt><dd></dd>
+<dt><strong>The API key (available upon registration at https://valenoq.com)</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Setting api_key globally:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;yourApiKey&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, dmitry samarkanov.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -21,6 +21,9 @@ config.set(api_key="yourApiKey") # the key is available upon registration at htt
 * **List of supported tickers:** https://valenoq.com/static/files/list_available_tickers_valenoqcom.txt
 * **Supported historical dates**: 01/01/2015 - 31/07/2020
 
+## API documentation
+http://data.samarkanov.info/valenoq-python/
+
 ## Getting historical intraday data
 **Basic functionality**:
 ```python
@@ -49,10 +52,10 @@ data = request.get("AAPL", start="2018-05-01", end="2018-05-05", frequency="minu
 **Getting historical data for a list of tickers:**
 ```python
 # 1-minute bars for AAPL, MU and INTC:
-data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1) 
+data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1)
 
 # 15-minute bars between {01/May/2018 - 05/May/2018} for AAPL and INTC
-request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15) 
+request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15)
 ```
 
 ## Getting balance sheet data

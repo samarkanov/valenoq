@@ -119,6 +119,8 @@ def get(ticker, *args, **kwargs):
     """
     Get the time series data for the provided ticker(s).
 
+    Returns the historical time series either for intraday or end-of-the day data.
+
     Parameters
     ----------
     ticker : str or list
@@ -130,42 +132,62 @@ def get(ticker, *args, **kwargs):
         The end date of the data series
         Must be provided is the `start` day is not empty
     date: str or datetime, optional
-        The requested date
-        If:
-            - No `date` is provided
-            - And no <`start`, `end`> dates are provided
-            then no data will be returned
+        The requested date.
     api_key: str, optional
-        The API key (available after registration at https://valenoq.com)
-        If:
-            - No API key provided
-            - And there is no `api_key` in ~/.valenoq/api.config
-            then the returned time series will be truncated
+        The API key (available after registration at https://valenoq.com). If `api_key`
+        is not provided and the configuration was skipped, then the returned time
+        series will be truncated
     frequency: {"minute", "hour", "day"}, optional
         The data frequency.
         Default value: "hour"
     collapse: {1, 5, 10, 15, 30}, optional
-        The interval of intraday data. If:
-            - the requested frequency is "hour"
-            - or the requested frequency is "day"
-            the provided value of `collapse` is ignored and set to default 1
-        If:
-            - the requested frequency is "minute"
-            the provided of `collapse` value is taken
-        Example:
-            - `collapse` = 5
-            - and `frequency` = "minute"
-            returns data represented as an array of 5-minute bars.
+        The interval of intraday data. Applicable only when the `frequence` is "minute".
+        If the requested frequency is either "hour" or "day", then the provided value of `collapse` is ignored
+        and the default 1 is used.
+
         Default values:
-            - 5 if the requested `frequency` is "minute"
-            - 1 otherwise
+        - 5 if the requested `frequency` is "minute"
+        - 1 otherwise
     out_format: {"json", "dict", "pandas"}, optional
         The format of the output.
         Default value: pandas DataFrame object
+
+    Returns
+    -------
+    Pandas dataframe containing the dataseries
+
+    Examples
+    --------
+    1-day bar:
+
+    >>> data = request.get("AAPL", date="2018-05-01", frequency="day")
+    >>> data
+                close   high     low    open         vol ticker
+    dt
+    2018-05-01  169.1  169.2  165.27  166.41  53569300.0   AAPL
+
+    1-minute bars for "AAPL":
+
+    >>> data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=1)
+
+    1-minute bars for a list of tickers:
+
+    >>> request.get(["AAPL", "TSLA"], date="2018-05-01", frequency="minute", collapse=1)
+
+    1-minute bars for a list of tickers and interval of dates:
+
+    >>> tickers = ["AAPL", "TSLA"]
+    >>> request.get(tickers, start="2018-05-01", end="2018-05-02", frequency="minute", collapse=1)
     """
+
+    if len(args) > 0:
+        raise ValenoqIllegalInputs("Positional arguments are not supported")
+
     result = dict()
 
-    api_key = kwargs.get("api_key", config.get("api_key"))
+    api_key = kwargs.get("api_key")
+    if not api_key:
+        api_key = config.get("api_key")
 
     if isinstance(ticker, str):
         ticker = [ticker]
@@ -204,28 +226,48 @@ def balance_sheet(ticker, *args, **kwargs):
     """
     Get the balance sheet data for the provided ticker(s).
 
+    Returns the balance sheet for specified tickers and quarter.
+
     Parameters
     -----------
     ticker : str or list
         The ticker name or list of ticker names for which the data is requested
         The maximum length of the list is 5
     api_key: str, optional
-        The API key (available after registration at https://valenoq.com)
-        If:
-            - No API key provided
-            - And there is no `api_key` in ~/.valenoq/api.config
-            then the returned balance sheet will truncated
+        The API key (available after registration at https://valenoq.com). If `api_key`
+        is not provided and the configuration was skipped, then the returned balance sheet
+        will be truncated
     nr_quarters: int, optional
         The number of quarters (since the last one) for which the data is requested.
         Maximum limit is 12.
         Default value: 1 (latest reported balance sheet is returned)
     out_format: {"json", "array", "pandas"}, optional
         The format of the output.
-        Default value: pandas DataFrame object
+        Default value: pandas DataFrame object.
+
+    Returns
+    -------
+    Pandas dataframe containing the data
+
+    Examples
+    --------
+    Last quarter balance sheet for a ticker:
+
+    >>> data = request.balance_sheet("AAPL")
+
+    Last quarter balance sheet for a list of tickers:
+
+    >>> data = request.balance_sheet(["AAPL", "INTC"])
+
+    Five last balance sheets for "AAPL":
+
+    >>> data = request.balance_sheet("AAPL", nr_quarters=5)
     """
     result = dict()
 
-    api_key = kwargs.get("api_key", config.get("api_key"))
+    api_key = kwargs.get("api_key")
+    if not api_key:
+        api_key = config.get("api_key")
 
     nr_quarters = kwargs.get("nr_quarters", 1)
 
