@@ -35,12 +35,12 @@ data = request.get("AAPL", date="2018-05-01")
 # or
 data = request.get("AAPL", date="2018-05-01", frequency="hour")
 
-# Intraday x-minutes bars for a ticker
+# Intraday x-minute bars for a ticker
 data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=1)  # 1-minute bars
 data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5)  # 5-minutes bars
-data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=10) # 10-minutes bars
-data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=15) # 15-minutes bars
-data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5)  # 30-minutes bars
+data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=10) # 10-minute bars
+data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=15) # 15-minute bars
+data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5)  # 30-minute bars
 
 # Interval of dates is supported:
 data = request.get("AAPL", start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15)
@@ -51,7 +51,7 @@ data = request.get("AAPL", start="2018-05-01", end="2018-05-05", frequency="minu
 # 1-minute bars for AAPL, MU and INTC:
 data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1) 
 
-# 15-minutes bars between {01/May/2018 - 05/May/2018} for AAPL and INTC
+# 15-minute bars between {01/May/2018 - 05/May/2018} for AAPL and INTC
 request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15) 
 ```
 
