@@ -187,7 +187,10 @@ def get(ticker, *args, **kwargs):
 
     api_key = kwargs.get("api_key")
     if not api_key:
-        api_key = config.get("api_key")
+        try:
+            api_key = config.get("api_key")
+        except config.ValenoqConfigFileDoesNotExist:
+            api_key = "no_api_key"
 
     if isinstance(ticker, str):
         ticker = [ticker]
@@ -267,7 +270,10 @@ def balance_sheet(ticker, *args, **kwargs):
 
     api_key = kwargs.get("api_key")
     if not api_key:
-        api_key = config.get("api_key")
+        try:
+            api_key = config.get("api_key")
+        except config.ValenoqConfigFileDoesNotExist:
+            api_key = "no_api_key"
 
     nr_quarters = kwargs.get("nr_quarters", 1)
 

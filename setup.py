@@ -13,7 +13,7 @@ PACKAGES = [
 
 setup(
     name='valenoq',
-    version='0.0.2',
+    version='0.0.4',
     description='Python package to interact with valenoq.com RESTful API',
     url='http://github.com/samarkanov/valenoq',
     author='valenoq.com',
