@@ -18,8 +18,8 @@ config.set(api_key="yourApiKey") # the key is available upon registration at htt
 ```
 
 ## Current limitations
-**List of supported tickers:** https://valenoq.com/static/files/list_available_tickers_valenoqcom.txt
-**Supported historical dates**: 01/01/2015 - 31/07/2020
+* **List of supported tickers:** https://valenoq.com/static/files/list_available_tickers_valenoqcom.txt
+* **Supported historical dates**: 01/01/2015 - 31/07/2020
 
 ## Getting historical intraday data
 **Basic functionality**:
@@ -36,22 +36,23 @@ data = request.get("AAPL", date="2018-05-01")
 data = request.get("AAPL", date="2018-05-01", frequency="hour")
 
 # Intraday x-minutes bars for a ticker
-data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=1) # 1-minute bars
-data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5) # 5-minutes bars
+data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=1)  # 1-minute bars
+data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5)  # 5-minutes bars
 data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=10) # 10-minutes bars
 data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=15) # 15-minutes bars
-data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5) # 30-minutes bars
+data = request.get("AAPL", date="2018-05-01", frequency="minute", collapse=5)  # 30-minutes bars
 
-# Interval of dates are supported:
-# for a ticker
+# Interval of dates is supported:
 data = request.get("AAPL", start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15)
 ```
 
 **Getting historical data for list of tickers:**
 ```python
-data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1) # 1-minute bars for AAPL, MU and INTC
+# 1-minute bars for AAPL, MU and INTC:
+data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1) 
 
-data = request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15) # 15-minutes bars between {01/May/2018 - 05/May/2018} for AAPL and INTC
+# 15-minutes bars between {01/May/2018 - 05/May/2018} for AAPL and INTC
+data = request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15) 
 ```
 
 ## Getting balance sheet data
