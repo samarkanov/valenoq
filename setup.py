@@ -8,12 +8,16 @@ INSTALL_REQ = [
 
 PACKAGES = [
     "valenoq",
-    "valenoq.api"
+    "valenoq.api",
+    "valenoq.pipe",
+    "valenoq.pipe.data",
+    "valenoq.pipe.algo",
+    "valenoq.study"
 ]
 
 setup(
     name='valenoq',
-    version='0.0.4',
+    version='0.0.5dev',
     description='Python package to interact with valenoq.com RESTful API',
     url='http://github.com/samarkanov/valenoq',
     author='valenoq.com',

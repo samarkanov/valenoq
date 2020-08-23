@@ -67,7 +67,7 @@ class ValenoqApiReqest(object):
         reply = requests.get(url)
         if reply.status_code != 200:
             raise ValenoqAPICall404("{url} cannot be reached. Please retry later".format(url=url))
-        self.raw = _extract_data(json.loads(reply.text))
+        self.raw = extract_data(json.loads(reply.text))
         return self
 
     def format(self):
@@ -87,7 +87,7 @@ class ValenoqApiReqest(object):
         return res
 
 
-def _extract_data(reply):
+def extract_data(reply):
     if reply.get("success") == False:
         reply = reply.get("result", {"error": "VALENOQx404",
                                  "text": "Error while making API call. Please retry later"})
@@ -289,7 +289,7 @@ def balance_sheet(ticker, *args, **kwargs):
         reply = requests.get(url)
         if reply.status_code != 200:
             raise ValenoqAPICall404("{url} cannot be reached. Please retry later".format(url=url))
-        result[tick] = _extract_data(json.loads(reply.text))
+        result[tick] = extract_data(json.loads(reply.text))
 
     result = _format_out_data(result, kwargs.get("out_format", "pandas"))
     return result
