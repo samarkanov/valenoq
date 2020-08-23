@@ -52,7 +52,7 @@ data = request.get("AAPL", start="2018-05-01", end="2018-05-05", frequency="minu
 data = request.get(["AAPL", "MU", "INTC"], date="2018-05-01", frequency="minute", collapse=1) 
 
 # 15-minutes bars between {01/May/2018 - 05/May/2018} for AAPL and INTC
-data = request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15) 
+request.get(["AAPL", "INTC"], start="2018-05-01", end="2018-05-05", frequency="minute", collapse=15) 
 ```
 
 ## Getting balance sheet data
