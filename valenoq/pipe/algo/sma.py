@@ -1,5 +1,10 @@
 from pdb import set_trace as stop
 
 
-def sma(ts, period):
-    return {"ts": ts, "period": period}
+class Algo(object):
+
+    def __init__(self):
+        pass
+
+    def exec(self):
+        pass
