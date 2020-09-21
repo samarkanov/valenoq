@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 INSTALL_REQ = [
     "pandas >= 0.14",
     "numpy >= 1.8",
-    "requests >= 2.7.0"
+    "requests >= 2.7.0",
+    "valenoq_utils"
 ]
 
 PACKAGES = [
