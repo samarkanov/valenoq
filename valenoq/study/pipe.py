@@ -132,7 +132,7 @@ class PipeReply(object):
                 df[new_col] = interp.interpret(algo_node)
         else:
             df = interp.get_df()
-            
+
         return df
 
     def _prepare_env(self):
@@ -174,6 +174,6 @@ def check_run_on_valenoq(func):
         return ctx
     return wrapper
 
-# @check_run_on_valenoq # TODO: uncomment
+@check_run_on_valenoq # TODO: uncomment
 def run_pipe(pipe_obj, start, end):
     return PipeReply(pipe_obj, beg=start, end=end)._prepare_env()
