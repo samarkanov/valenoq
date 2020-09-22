@@ -9,7 +9,7 @@ def err_as_dict(err_obj):
 
 class VALENOQxBASExERROR(Exception):
 
-    def __init__(self, msg):
+    def __init__(self, msg=""):
         try:
             ln = sys.exc_info()[-1].tb_lineno
         except AttributeError:

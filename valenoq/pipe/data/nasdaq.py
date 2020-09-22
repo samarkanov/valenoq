@@ -6,7 +6,7 @@ from valenoq.api.request import BASE_URL, ValenoqAPICall404, extract_data
 from valenoq.api import config
 
 
-class ValenoqLazyTS(object):
-
-    def __init__(self, param):
-        pass
+close = "close"
+open = "open"
+high = "high"
+low = "low"
